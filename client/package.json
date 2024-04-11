@@ -49,6 +49,7 @@
   },
   "proxy": "https://re21.store",
   "devDependencies": {
-    "cra-bundle-analyzer": "^0.1.1"
+    "cra-bundle-analyzer": "^0.1.1",
+    "typescript": "^5.4.5"
   }
 }
