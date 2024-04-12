@@ -31,9 +31,13 @@ const MainPage = () => {
     axiosInstance({
       url: "/upcyclings/descending?page=1&size=4",
       method: "get",
-    }).then((response) => {
-      setData(response.data.data);
-    });
+    })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((error) => {
+        console.error("요청에 실패했습니다:", error);
+      });
 
     setNowloding(true);
   }, []);
@@ -72,14 +76,8 @@ const MainPage = () => {
           <Header>
             <SideBarModal />
             <Logo>
-              <LogoImg
-                src={process.env.PUBLIC_URL + "/image/logo3.png"}
-                alt="로고"
-              />
-              <LogoImg
-                src={process.env.PUBLIC_URL + "/image/logo2.png"}
-                alt="로고"
-              />
+              <LogoImg src={process.env.PUBLIC_URL + "/image/logo3.png"} alt="로고" />
+              <LogoImg src={process.env.PUBLIC_URL + "/image/logo2.png"} alt="로고" />
             </Logo>
             <ProfileDropdown />
           </Header>
@@ -87,17 +85,9 @@ const MainPage = () => {
           <Main>
             {/* 반응형 배너 캐러셀 적용 */}
             {window.innerWidth <= 768 ? (
-              <CustomSwiper
-                pagination={true}
-                modules={[Pagination]}
-                autoHeight={true}
-              >
+              <CustomSwiper pagination={true} modules={[Pagination]} autoHeight={true}>
                 <SwiperSlide>
-                  <Banner
-                    link="/about"
-                    img="/image/banner1.webp"
-                    order="first"
-                  />
+                  <Banner link="/about" img="/image/banner1.webp" order="first" />
                 </SwiperSlide>
                 <SwiperSlide>
                   <Banner link="/funding" img="/image/banner2.webp" />

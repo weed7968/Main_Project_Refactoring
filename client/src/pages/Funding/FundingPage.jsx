@@ -27,17 +27,25 @@ const FundingPage = () => {
       axiosInstance({
         url: `/upcyclings/search?page=1&size=8&searchKeyword=${searchParam}`,
         method: "get",
-      }).then((response) => {
-        setFundingList(response.data.data);
-        setIsLoding(true);
-      });
+      })
+        .then((response) => {
+          setFundingList(response.data.data);
+          setIsLoding(true);
+        })
+        .catch((error) => {
+          console.error("요청에 실패했습니다:", error);
+        });
     } else {
       axiosInstance({
         url: "/upcyclings/descending?page=1&size=16",
         method: "get",
-      }).then((response) => {
-        setIsLoding(true);
-      });
+      })
+        .then((response) => {
+          setIsLoding(true);
+        })
+        .catch((error) => {
+          console.error("요청에 실패했습니다:", error);
+        });
     }
 
     getMemberId();
@@ -63,36 +71,52 @@ const FundingPage = () => {
         axiosInstance({
           url: `/upcyclings/search?page=1&size=8&sort=${sort}&searchKeyword=${searchParam}`,
           method: "get",
-        }).then((response) => {
-          setFundingList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setFundingList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       } else {
         axiosInstance({
           url: `/upcyclings/search?page=1&size=8&sort=${sort}&categoryId=${kategorie}&searchKeyword=${searchParam}`,
           method: "get",
-        }).then((response) => {
-          setFundingList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setFundingList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       }
     } else {
       if (kategorie === 0) {
         axiosInstance({
           url: `/upcyclings/${sort}?page=1&size=16`,
           method: "get",
-        }).then((response) => {
-          setFundingList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setFundingList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       } else {
         axiosInstance({
           url: `/upcyclings/${sort}/categories/${kategorie}?page=1&size=16`,
           method: "get",
-        }).then((response) => {
-          setFundingList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setFundingList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       }
     }
   }, [sort, kategorie, searchParam]);
@@ -112,32 +136,48 @@ const FundingPage = () => {
           axiosInstance({
             url: `/upcyclings/search?page=${page}&size=16&sort=${sort}&searchKeyword=${searchParam}`,
             method: "get",
-          }).then((response) => {
-            setFundingList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setFundingList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         } else {
           axiosInstance({
             url: `/upcyclings/search?page=${page}&size=16&sort=${sort}&categoryId=${kategorie}&searchKeyword=${searchParam}`,
             method: "get",
-          }).then((response) => {
-            setFundingList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setFundingList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         }
       } else {
         if (kategorie === 0) {
           axiosInstance({
             url: `/upcyclings/${sort}?page=${page}&size=16`,
             method: "get",
-          }).then((response) => {
-            setFundingList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setFundingList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         } else {
           axiosInstance({
             url: `/upcyclings/${sort}/categories/${kategorie}?page=${page}&size=8`,
             method: "get",
-          }).then((response) => {
-            setFundingList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setFundingList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         }
       }
     }
@@ -167,11 +207,7 @@ const FundingPage = () => {
           param="/funding"
           // link="/fundingcreate"
         />
-        <Funding>
-          {isLoding
-            ? fundingList.map((obj, index) => <List key={index} {...obj} />)
-            : null}
-        </Funding>
+        <Funding>{isLoding ? fundingList.map((obj, index) => <List key={index} {...obj} />) : null}</Funding>
       </ContainerBottom>
     </Container>
   );

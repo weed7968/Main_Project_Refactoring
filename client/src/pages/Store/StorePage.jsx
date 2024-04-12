@@ -24,18 +24,26 @@ const StorePage = () => {
       axiosInstance({
         url: `/sells/search?page=1&size=16&searchKeyword=${searchParam}`,
         method: "get",
-      }).then((response) => {
-        setStoreList(response.data.data);
-        setIsLoding(true);
-      });
+      })
+        .then((response) => {
+          setStoreList(response.data.data);
+          setIsLoding(true);
+        })
+        .catch((error) => {
+          console.error("요청에 실패했습니다:", error);
+        });
     } else {
       axiosInstance({
         url: "/sells/descending?page=1&size=16",
         method: "get",
-      }).then((response) => {
-        setStoreList(response.data.data);
-        setIsLoding(true);
-      });
+      })
+        .then((response) => {
+          setStoreList(response.data.data);
+          setIsLoding(true);
+        })
+        .catch((error) => {
+          console.error("요청에 실패했습니다:", error);
+        });
     }
 
     window.addEventListener("scroll", handleScroll);
@@ -60,36 +68,52 @@ const StorePage = () => {
         axiosInstance({
           url: `/sells/search?page=1&size=16&sort=${sort}&searchKeyword=${searchParam}`,
           method: "get",
-        }).then((response) => {
-          setStoreList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setStoreList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       } else {
         axiosInstance({
           url: `/sells/search?page=1&size=16&sort=${sort}&sellCategoryId=${kategorie}&searchKeyword=${searchParam}`,
           method: "get",
-        }).then((response) => {
-          setStoreList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setStoreList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       }
     } else {
       if (kategorie === 0) {
         axiosInstance({
           url: `/sells/${sort}?page=1&size=16`,
           method: "get",
-        }).then((response) => {
-          setStoreList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setStoreList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       } else {
         axiosInstance({
           url: `/sells/${sort}/sellcategories/${kategorie}?page=1&size=16`,
           method: "get",
-        }).then((response) => {
-          setStoreList(response.data.data);
-          setIsLoding(true);
-        });
+        })
+          .then((response) => {
+            setStoreList(response.data.data);
+            setIsLoding(true);
+          })
+          .catch((error) => {
+            console.error("요청에 실패했습니다:", error);
+          });
       }
     }
   }, [sort, kategorie, searchParam]);
@@ -109,32 +133,48 @@ const StorePage = () => {
           axiosInstance({
             url: `/sells/search?page=${page}&size=16&sort=${sort}&searchKeyword=${searchParam}`,
             method: "get",
-          }).then((response) => {
-            setStoreList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setStoreList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         } else {
           axiosInstance({
             url: `/sells/search?page=${page}&size=16&sort=${sort}&sellCategoryId=${kategorie}&searchKeyword=${searchParam}`,
             method: "get",
-          }).then((response) => {
-            setStoreList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setStoreList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         }
       } else {
         if (kategorie === 0) {
           axiosInstance({
             url: `/sells/${sort}?page=${page}&size=16`,
             method: "get",
-          }).then((response) => {
-            setStoreList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setStoreList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         } else {
           axiosInstance({
             url: `/sells/${sort}/sellcategories/${kategorie}?page=${page}&size=16`,
             method: "get",
-          }).then((response) => {
-            setStoreList((prev) => [...prev, ...response.data.data]);
-          });
+          })
+            .then((response) => {
+              setStoreList((prev) => [...prev, ...response.data.data]);
+            })
+            .catch((error) => {
+              console.error("요청에 실패했습니다:", error);
+            });
         }
       }
     }
@@ -156,17 +196,8 @@ const StorePage = () => {
       />
       <ContainerBottom>
         <h1>Store</h1>
-        <SortButton
-          sort={sort}
-          setSort={setSort}
-          role={role}
-          link="/storecreate"
-        />
-        <SellItem>
-          {isLoding
-            ? stoerList.map((obj, index) => <Item key={index} {...obj} />)
-            : null}
-        </SellItem>
+        <SortButton sort={sort} setSort={setSort} role={role} link="/storecreate" />
+        <SellItem>{isLoding ? stoerList.map((obj, index) => <Item key={index} {...obj} />) : null}</SellItem>
       </ContainerBottom>
     </Container>
   );
